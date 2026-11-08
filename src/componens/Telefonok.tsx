@@ -16,6 +16,7 @@ function Phones(){
     }
 
     const [telefonok, setTelefonok] = useState<Telefon[]>([]);
+    const [rendezes, setRendezes] = useState("novekvo")
 
     useEffect( ()=>{
         async function betolt(){
@@ -30,8 +31,30 @@ function Phones(){
         betolt()   
     }, [])
 
+    function rendezNovekvo(){
+        const rendezett = [...telefonok].sort((a,b) =>
+            a.nev.localeCompare(b.nev)
+        );
+
+        setTelefonok(rendezett);
+        setRendezes("novekvo");
+    }
+
+    function rendezCsokkeno(){
+        const rendezett = [...telefonok].sort((a,b) =>
+            b.nev.localeCompare(a.nev)
+        );
+
+        setTelefonok(rendezett);
+        setRendezes("csokkeno");
+    }
+
     return<>
         <h2>Telefonok lista</h2>
+
+    <button onClick={() => setRendezes(rendezNovekvo)}>Növekvő sorrend (A-Z)</button>
+    <button onClick={() => setRendezes(rendezCsokkeno)}>Csökkenő sorrend (Z-A)</button>
+
         <table>
             <thead>
                 <th>Név</th>
